@@ -1,0 +1,27 @@
+[
+  {
+    "example": "ex01_malware_not_packed",
+    "sha256": "015ce1b5107d8566f35ac13726726571ca02eef2eafb5ea571db5ccf85283841",
+    "split": "T0"
+  },
+  {
+    "example": "ex02_malware_packed",
+    "sha256": "5746314b5f3a1c28f17dbd739d7526de9ca873fbb83e1788fe8c0d1bc3768626",
+    "split": "T0"
+  },
+  {
+    "example": "ex03_benign_exe",
+    "sha256": "38bb6b85a376a59b715599003dcc1e3b8057067156b184fc4d8ba2e328b54871",
+    "split": "B_fit"
+  },
+  {
+    "example": "ex04_benign_dll",
+    "sha256": "76aa8d3fa574310729bdb0a1b277d82f25700e752cafb36a1f7521600016251b",
+    "split": "B_fit"
+  },
+  {
+    "example": "ex05_malware_network_strings",
+    "sha256": "63a43fbc1a8f41a28f24d224fbe992555f72343fce1088e77facd0e8baaf9f6b",
+    "split": "T0"
+  }
+]

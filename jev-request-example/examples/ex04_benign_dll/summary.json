@@ -1,0 +1,32 @@
+{
+  "example": "ex04_benign_dll",
+  "stratum": "benign library (DLL)",
+  "label": "benign",
+  "source": "benign collection (winget, Cygwin, MSYS2 packages, Windows 10 system files), training split",
+  "state_variant": "S0",
+  "state_qwen3_tokens": 534,
+  "stratum_size": 46,
+  "stratum_median_tokens": 564.5,
+  "requests": [
+    {
+      "file": "request_1.json",
+      "n_questions": 12,
+      "qwen3_tokens": 1805,
+      "with_margin": 1986
+    },
+    {
+      "file": "request_2.json",
+      "n_questions": 12,
+      "qwen3_tokens": 1746,
+      "with_margin": 1921
+    },
+    {
+      "file": "request_3.json",
+      "n_questions": 9,
+      "qwen3_tokens": 1514,
+      "with_margin": 1666
+    }
+  ],
+  "total_qwen3_tokens": 5065,
+  "total_with_margin": 5573
+}

@@ -1,0 +1,51 @@
+FILE
+kind: EXE
+size: small
+overlay: no
+resources: yes
+tls_callbacks: no
+signed: yes
+SECTIONS
+count: few
+entry_section: code
+wx_sections: none
+section: code size=large vr=normal entropy=high flags=R-X
+section: rodata size=medium vr=normal entropy=low flags=R--
+section: data size=small vr=normal entropy=low flags=RW-
+section: resources size=tiny vr=normal entropy=low flags=R--
+section: relocations size=small vr=normal entropy=high flags=R--
+TOOLCHAIN
+packers_detected: none
+packed_by_detector: no
+packed_by_heuristic: no
+IMPORTS
+dll_count: few
+imports_minimal: no
+ordinal_imports: none
+sensitive_categories: process_injection, execution, anti_analysis, mass_filesystem
+kernel32: many | execution: GetCommandLine, GetStartupInfo | anti_analysis: QueryPerformanceCounter, GetCurrentProcess, GetSystemTimeAsFileTime, SetLastError | mass_filesystem: FindClose, FindFirstFileEx, FindNextFile
+user32: few | process_injection: PostMessage, GetWindowThreadProcessId
+shell32: few | execution: CommandLineToArgv
+CAPABILITIES
+rules: some
+rule: "allocate thread local storage" ns=host-interaction/thread/tls mbc=C0040
+rule: "enumerate files on Windows" ns=host-interaction/file-system/files/list attack=T1083 mbc=E1083
+rule: "contains PDB path" ns=executable/pe/pdb
+rule: "set thread local storage value" ns=host-interaction/thread/tls mbc=C0041
+rule: "enumerate PE sections" ns=load-code/pe mbc=B0046.001
+rule: "accept command line arguments" ns=host-interaction/cli attack=T1059 mbc=E1059
+rule: "reference analysis tools strings" ns=anti-analysis mbc=B0013.001
+rule: "get thread local storage value" ns=host-interaction/process
+rule: "query environment variable" ns=host-interaction/environment-variable attack=T1082 mbc=E1082
+rule: "parse PE header" ns=load-code/pe attack=T1129
+rule: "write file on Windows" ns=host-interaction/file-system/write mbc=C0052
+rule: "link function at runtime on Windows" ns=linking/runtime-linking attack=T1129
+rules_omitted: 1
+STRINGS
+strings_total: some
+counts: url=none ip=none registry=none path=few command=none mutex=none user_agent=none
+analysis_directed_text: no
+path: "<build_path>"
+CODE STATS
+functions: some
+functions_with_sensitive_api: some

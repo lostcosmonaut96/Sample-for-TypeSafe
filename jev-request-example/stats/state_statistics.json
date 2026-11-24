@@ -1,0 +1,79 @@
+{
+  "n_states": 21796,
+  "all": {
+    "n_states": 21796,
+    "qwen3_tokens": {
+      "mean": 617.0,
+      "median": 591.0,
+      "p90": 971.0,
+      "max": 1024
+    },
+    "quoted_strings_per_state": {
+      "mean": 3.87,
+      "max": 36
+    },
+    "share_of_states_with_at_least_one": {
+      "url": 0.3875,
+      "ip": 0.1192,
+      "registry": 0.2462,
+      "path": 0.517,
+      "command": 0.0633,
+      "mutex": 0.0375,
+      "user_agent": 0.0631
+    },
+    "share_flagged_analysis_directed_text": 0.0372
+  },
+  "malware": {
+    "n_states": 7466,
+    "qwen3_tokens": {
+      "mean": 607.5,
+      "median": 554.0,
+      "p90": 969.0,
+      "max": 1024
+    },
+    "quoted_strings_per_state": {
+      "mean": 3.58,
+      "max": 33
+    },
+    "share_of_states_with_at_least_one": {
+      "url": 0.1907,
+      "ip": 0.0955,
+      "registry": 0.2487,
+      "path": 0.4186,
+      "command": 0.0592,
+      "mutex": 0.0067,
+      "user_agent": 0.0698
+    },
+    "share_flagged_analysis_directed_text": 0.0011
+  },
+  "benign": {
+    "n_states": 14330,
+    "qwen3_tokens": {
+      "mean": 622.0,
+      "median": 603.0,
+      "p90": 972.0,
+      "max": 1024
+    },
+    "quoted_strings_per_state": {
+      "mean": 4.03,
+      "max": 36
+    },
+    "share_of_states_with_at_least_one": {
+      "url": 0.49,
+      "ip": 0.1316,
+      "registry": 0.2449,
+      "path": 0.5682,
+      "command": 0.0654,
+      "mutex": 0.0535,
+      "user_agent": 0.0596
+    },
+    "share_flagged_analysis_directed_text": 0.056
+  },
+  "provenance": {
+    "study_commit": "c3f91f4",
+    "e1_run": "20261112T075504Z-061e8b7",
+    "state_cfg_hash": "b2a22309d785",
+    "states": "every E1 development and test file with a complete S0 state",
+    "generated": "2026-11-22"
+  }
+}

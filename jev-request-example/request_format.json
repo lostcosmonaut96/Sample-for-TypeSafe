@@ -1,0 +1,13 @@
+{
+  "method": "POST",
+  "endpoint": "https://api.typesafe.ai/v1/systemone",
+  "model": "jev-1.13.0",
+  "max_questions_per_request": 12,
+  "headers": {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer <API key, read from an environment variable>"
+  },
+  "body": "json.dumps(body, ensure_ascii=False), UTF-8; the request_N.json files show the same object pretty-printed",
+  "questions_per_state": 33,
+  "requests_per_state": 3
+}

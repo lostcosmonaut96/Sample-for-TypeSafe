@@ -1,0 +1,32 @@
+{
+  "example": "ex03_benign_exe",
+  "stratum": "benign executable (EXE)",
+  "label": "benign",
+  "source": "benign collection (winget, Cygwin, MSYS2 packages, Windows 10 system files), training split",
+  "state_variant": "S0",
+  "state_qwen3_tokens": 626,
+  "stratum_size": 4411,
+  "stratum_median_tokens": 626.0,
+  "requests": [
+    {
+      "file": "request_1.json",
+      "n_questions": 12,
+      "qwen3_tokens": 1897,
+      "with_margin": 2087
+    },
+    {
+      "file": "request_2.json",
+      "n_questions": 12,
+      "qwen3_tokens": 1838,
+      "with_margin": 2022
+    },
+    {
+      "file": "request_3.json",
+      "n_questions": 9,
+      "qwen3_tokens": 1606,
+      "with_margin": 1767
+    }
+  ],
+  "total_qwen3_tokens": 5341,
+  "total_with_margin": 5876
+}

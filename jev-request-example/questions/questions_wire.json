@@ -1,0 +1,269 @@
+{
+  "note": "The 33 questions of E1's two Jev readouts in the wire format of /v1/systemone, in the order they are asked: the verdict question (readout A0), then the 32 atomic questions (readout A1).",
+  "questions": {
+    "mal_noul": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state, is the program described by the state malware?",
+      "criteria": {
+        "true": "The evidence, taken together, indicates software made to harm users or systems, to steal from them or to act against their interest.",
+        "false": "The evidence is consistent with legitimate software, and each sensitive-looking element has an ordinary explanation."
+      }
+    },
+    "qb_exec_command_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program start other programs, shell commands or scripts?",
+      "criteria": {
+        "true": "The state lists process-creation or shell APIs, execution capabilities, or command-line strings such as cmd, powershell or wscript invocations.",
+        "false": "The state contains no process-creation or shell API, no execution capability and no command-line string."
+      }
+    },
+    "qb_persist_run_key_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program register itself in a Run or RunOnce registry key so that it starts when a user logs on?",
+      "criteria": {
+        "true": "Registry-writing APIs together with Run or RunOnce key paths in the strings, or a Run-key persistence capability, appear in the state.",
+        "false": "The state contains neither a Run-key path nor an autostart registry capability."
+      }
+    },
+    "qb_persist_service_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program install itself as a Windows service, or change an existing service, so that it runs automatically?",
+      "criteria": {
+        "true": "Service-control APIs that create or modify a service, or a service-persistence capability, appear in the state.",
+        "false": "The state shows neither service-installation APIs nor a service-persistence capability."
+      }
+    },
+    "qb_persist_sched_task_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program create a scheduled task so that it runs again later or at every logon?",
+      "criteria": {
+        "true": "Task Scheduler COM interfaces, schtasks command strings, or a scheduled-task capability appear in the state.",
+        "false": "The state contains neither Task Scheduler interfaces nor schtasks command strings nor a scheduled-task capability."
+      }
+    },
+    "qb_persist_startup_folder_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program place itself or a shortcut to itself in the Windows Startup folder so that it starts when a user logs on?",
+      "criteria": {
+        "true": "The strings name the Startup folder path, or the capabilities list a startup-folder capability, together with file-writing or shortcut APIs.",
+        "false": "The state contains neither a Startup-folder path nor a startup-folder capability."
+      }
+    },
+    "qb_inject_process_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS and CAPABILITIES), does this program write code into another running process and make that process run it?",
+      "criteria": {
+        "true": "Remote-process memory and thread APIs (opening a process, allocating or writing remote memory, creating a remote thread), or injection capabilities, appear in the state.",
+        "false": "The state shows neither APIs that write into another process nor injection capabilities."
+      }
+    },
+    "qb_process_hollowing_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS and CAPABILITIES), does this program start a process in a suspended state, replace its memory with other code, and then resume it?",
+      "criteria": {
+        "true": "Suspended process creation combined with unmapping or rewriting the new process's memory and with thread-context or resume calls appears in the state, or a process-replacement capability is listed.",
+        "false": "The state shows neither suspended process creation with memory replacement nor a process-replacement capability."
+      }
+    },
+    "qb_priv_escalation_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program raise its own privileges, for example by enabling the debug privilege, manipulating access tokens or bypassing user account control?",
+      "criteria": {
+        "true": "Privilege-adjustment or token APIs, privilege-name strings such as SeDebugPrivilege, or UAC-bypass capabilities appear in the state.",
+        "false": "The state shows no privilege-adjustment API, no privilege-name string and no UAC-bypass capability."
+      }
+    },
+    "qb_anti_debug_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS and CAPABILITIES), does this program detect or hinder a debugger?",
+      "criteria": {
+        "true": "Debugger-check APIs such as IsDebuggerPresent, timing checks, or anti-debugging capabilities appear in the state.",
+        "false": "The state shows neither debugger-check APIs nor anti-debugging capabilities."
+      }
+    },
+    "qb_anti_vm_sandbox_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program detect whether it runs inside a virtual machine or an analysis sandbox?",
+      "criteria": {
+        "true": "Strings naming virtualization products or sandbox user names, hardware-query or user-activity checks, or VM-detection capabilities appear in the state.",
+        "false": "The state shows no string naming a virtualization product, no hardware or user-activity check and no VM-detection capability."
+      }
+    },
+    "qb_obfuscation_packing_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (SECTIONS, TOOLCHAIN, IMPORTS and CAPABILITIES), does this program hide its real code by packing, encrypting or obfuscating it?",
+      "criteria": {
+        "true": "A packer or protector is named in TOOLCHAIN or a packing flag is set, sections show very high entropy or an unusual layout, the imports are absent or minimal, or packing and obfuscation capabilities are listed.",
+        "false": "TOOLCHAIN lists no packer or protector and no packing flag is set, the sections have ordinary entropy and layout, and no packing or obfuscation capability is listed."
+      }
+    },
+    "qb_disable_security_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program switch off, bypass or tamper with antivirus, firewall or other security tools?",
+      "criteria": {
+        "true": "Strings naming security products or Defender, firewall and AMSI settings, registry or service APIs aimed at them, or anti-AV capabilities appear in the state.",
+        "false": "The state shows no reference to security products, Defender, firewall or AMSI settings and no anti-AV capability."
+      }
+    },
+    "qb_credential_access_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program read stored passwords or other credentials from browsers, password stores or the operating system?",
+      "criteria": {
+        "true": "Strings naming browser profile or password-store paths, credential-manager or memory-dump APIs, or credential-gathering capabilities appear in the state.",
+        "false": "The state shows no browser profile path, password store, credential API or credential-gathering capability."
+      }
+    },
+    "qb_keylogging_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS and CAPABILITIES), does this program record the keys a user types?",
+      "criteria": {
+        "true": "Keyboard hook, key-state polling or raw-input registration APIs, or keylogging capabilities, appear in the state.",
+        "false": "The state shows no keyboard hook, no key-state polling, no raw-input API and no keylogging capability."
+      }
+    },
+    "qb_screen_clipboard_capture_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS and CAPABILITIES), does this program capture the screen or read the clipboard contents?",
+      "criteria": {
+        "true": "Screen device-context and bitmap-copy APIs, clipboard APIs, or screenshot and clipboard capabilities appear in the state.",
+        "false": "The state shows no screen-capture API, no clipboard API and no related capability."
+      }
+    },
+    "qb_discovery_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS and CAPABILITIES), does this program collect information about the host system, its running processes or its network settings?",
+      "criteria": {
+        "true": "Several APIs or capabilities that query system information, list processes or read network configuration appear in the state.",
+        "false": "The state shows no API or capability that queries system information, lists processes or reads network configuration."
+      }
+    },
+    "qb_lateral_movement_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program reach other computers on the network and run code or copy files there?",
+      "criteria": {
+        "true": "Network-share, remote-service, WMI or remote-management APIs, strings with remote host names, or matching capabilities appear in the state.",
+        "false": "The state shows no network-share, remote-service, WMI or remote-management API and no matching capability."
+      }
+    },
+    "qb_c2_http_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program communicate with a remote server over HTTP or HTTPS?",
+      "criteria": {
+        "true": "HTTP client APIs, URLs or user-agent strings, or HTTP capabilities, appear in the state.",
+        "false": "The state shows no HTTP client API, no URL, no user-agent string and no HTTP capability."
+      }
+    },
+    "qb_c2_dns_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program use DNS queries to look up or exchange data with a remote server?",
+      "criteria": {
+        "true": "DNS query APIs, domain-like strings or DNS capabilities appear in the state.",
+        "false": "The state shows no DNS query API, no domain-like string and no DNS capability."
+      }
+    },
+    "qb_c2_raw_socket_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS and CAPABILITIES), does this program communicate with a remote server over raw TCP or UDP sockets?",
+      "criteria": {
+        "true": "Winsock APIs that create, connect, send and receive, or socket capabilities, appear in the state.",
+        "false": "The state shows no Winsock API and no socket capability."
+      }
+    },
+    "qb_download_execute_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program download a file from a remote server and then run it?",
+      "criteria": {
+        "true": "URL-download APIs together with file-writing and process-creation APIs, URLs that point to executable files, or download-and-execute capabilities appear in the state.",
+        "false": "The state shows no download API combined with file writing and process creation and no download-and-execute capability."
+      }
+    },
+    "qb_dropper_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (FILE, SECTIONS, IMPORTS and CAPABILITIES), does this program carry another program inside itself, for example in a resource, and write it to disk to run it?",
+      "criteria": {
+        "true": "Resource-extraction APIs combined with file-writing and process-creation APIs, large embedded resources or data sections, or an extract-and-run capability appear in the state.",
+        "false": "The state shows no resource extraction combined with file writing and process creation and no extract-and-run capability."
+      }
+    },
+    "qb_exfiltration_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program collect data from the host and send it to a remote server?",
+      "criteria": {
+        "true": "File-reading or file-enumeration APIs combined with network-send APIs, upload URLs, or data-sending capabilities appear in the state.",
+        "false": "The state shows no file reading combined with network-send APIs and no data-sending capability."
+      }
+    },
+    "qb_ransomware_encrypt_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program encrypt many user files and demand a ransom for them?",
+      "criteria": {
+        "true": "File-enumeration APIs combined with cryptographic APIs, ransom-note or payment strings, file-extension lists, or bulk-encryption capabilities appear in the state.",
+        "false": "The state shows no combination of file enumeration with encryption and no ransom-note or payment string."
+      }
+    },
+    "qb_shadow_copy_deletion_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program delete volume shadow copies, backups or recovery points?",
+      "criteria": {
+        "true": "Strings such as vssadmin, wmic shadowcopy or bcdedit recovery commands, shadow-copy APIs, or a recovery-inhibiting capability appear in the state.",
+        "false": "The state shows no shadow-copy, backup-deletion or recovery-disabling command, API or capability."
+      }
+    },
+    "qb_wiping_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program overwrite or destroy files, partitions or the boot record so that the data cannot be recovered?",
+      "criteria": {
+        "true": "Raw-disk access APIs, physical-drive path strings, overwrite loops over files, or disk-wiping capabilities appear in the state.",
+        "false": "The state shows no raw-disk access, no physical-drive path, no file-overwrite pattern and no disk-wiping capability."
+      }
+    },
+    "qb_mining_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program mine cryptocurrency with the processor or graphics card of the computer?",
+      "criteria": {
+        "true": "Strings naming mining pools, stratum URLs, mining algorithms or wallet addresses, or cryptocurrency capabilities, appear in the state.",
+        "false": "The state shows no mining-pool, stratum, mining-algorithm or wallet string and no cryptocurrency capability."
+      }
+    },
+    "qb_self_propagation_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program copy itself to other drives, shared folders or computers so that it spreads?",
+      "criteria": {
+        "true": "Drive or share enumeration combined with file-copy APIs, autorun.inf strings, or self-copy capabilities appear in the state.",
+        "false": "The state shows no drive or share enumeration combined with file copying, no autorun.inf string and no self-copy capability."
+      }
+    },
+    "qb_ben_gui_app_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (FILE, SECTIONS and IMPORTS), does this program look like an ordinary desktop application with a standard graphical interface and standard resources?",
+      "criteria": {
+        "true": "FILE reports resources, IMPORTS lists windowing, drawing and common-control APIs, and SECTIONS follow a standard layout.",
+        "false": "FILE reports no resources and IMPORTS lists no windowing or drawing APIs, or SECTIONS follow a non-standard layout."
+      }
+    },
+    "qb_ben_installer_updater_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (FILE, IMPORTS, STRINGS and CAPABILITIES), does this program behave like a legitimate installer or updater that copies its own files into a program folder, registers an uninstall entry and checks versions?",
+      "criteria": {
+        "true": "The state shows installer or updater traits: file and directory creation, uninstall or version strings, and TOOLCHAIN naming an installer framework, with every action visible and ordinary.",
+        "false": "The state shows no installer or updater traits."
+      }
+    },
+    "qb_ben_runtime_library_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (FILE, IMPORTS, CAPABILITIES and CODE STATS), does this program consist only of runtime or library code without application-specific behaviour?",
+      "criteria": {
+        "true": "FILE reports a DLL or a small program, IMPORTS list only basic runtime functions, CAPABILITIES list only runtime or compiler capabilities, and CODE STATS show no function that uses a sensitive API.",
+        "false": "The state shows application-specific behaviour, sensitive APIs or functions that use sensitive APIs."
+      }
+    },
+    "qb_ben_low_risk_plain": {
+      "type": "noul",
+      "instructions": "Based only on the evidence in the state (IMPORTS, CAPABILITIES and STRINGS), does this program limit itself to low-risk operations such as reading and writing files, managing memory and handling text?",
+      "criteria": {
+        "true": "IMPORTS list no sensitive API and CAPABILITIES list nothing from the anti-analysis, persistence, impact or collection namespaces.",
+        "false": "The state lists sensitive APIs or capabilities from the anti-analysis, persistence, impact or collection namespaces."
+      }
+    }
+  }
+}

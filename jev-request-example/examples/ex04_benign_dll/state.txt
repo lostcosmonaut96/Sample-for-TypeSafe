@@ -1,0 +1,50 @@
+FILE
+kind: DLL
+size: medium
+overlay: no
+resources: yes
+tls_callbacks: no
+signed: yes
+SECTIONS
+count: few
+entry_section: code
+wx_sections: none
+section: code size=large vr=normal entropy=medium flags=R-X
+section: rodata size=large vr=normal entropy=high flags=R--
+section: data size=small vr=normal entropy=low flags=RW-
+section: resources size=tiny vr=normal entropy=low flags=R--
+section: relocations size=medium vr=normal entropy=high flags=R--
+TOOLCHAIN
+packers_detected: none
+packed_by_detector: no
+packed_by_heuristic: no
+IMPORTS
+dll_count: many
+imports_minimal: no
+ordinal_imports: none
+sensitive_categories: process_injection, anti_analysis, input_screen_capture
+kernel32: many | process_injection: SetEvent | anti_analysis: QueryPerformanceCounter, GetCurrentProcess, GetSystemTimeAsFileTime | input_screen_capture: GlobalAlloc, GlobalLock, GlobalUnlock
+gdi32: many | input_screen_capture: CreateCompatibleDC
+<c_runtime>: many (dlls: few)
+<other_dll>: many (dlls: few)
+comdlg32: few
+user32: few
+winspool: some
+CAPABILITIES
+rules: some
+rule: "forwarded export" ns=executable/pe/export attack=T1129
+rule: "reference anti-VM strings targeting VirtualBox" ns=anti-analysis/anti-vm/vm-detection attack=T1497.001 mbc=B0009
+rule: "contains PDB path" ns=executable/pe/pdb
+rule: "resolve function by parsing PE exports" ns=load-code/pe
+rule: "parse PE header" ns=load-code/pe attack=T1129
+rule: "link function at runtime on Windows" ns=linking/runtime-linking attack=T1129
+rule: "terminate process" ns=host-interaction/process/terminate mbc=C0018
+STRINGS
+strings_total: some
+counts: url=few ip=none registry=none path=few command=none mutex=none user_agent=none
+analysis_directed_text: no
+url: "www.inkscape.org"
+path: "C:\\Users\\qt\\work\\qt\\qtbase\\lib\\Qt5PrintSupport.pdb"
+CODE STATS
+functions: some
+functions_with_sensitive_api: some
